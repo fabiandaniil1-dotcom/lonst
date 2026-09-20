@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="uk" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Умови використання — Eventu</title>
+<meta name="description" content="Правила бронювання та поведінки на подіях.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap site-header__inner">
+    <a class="brand" href="../index.html">
+      <span class="brand__mark">Ev</span>
+      <span><span class="brand__name">Eventu</span><br><span class="brand__sub">campus tickets</span></span>
+    </a>
+    <nav class="nav">
+      <a href="../index.html#events">Афіша</a>
+      <a href="../pages/how-it-works.html">Як це працює</a>
+      <a href="../pages/faq.html">Питання</a>
+      <a href="../legal/privacy.html">Документи</a>
+    </nav>
+    <button class="icon-btn" id="theme-toggle" aria-label="Тема">◐</button>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="wrap">
+    <h1>Умови використання</h1>
+    <p>Правила бронювання та поведінки на подіях.</p>
+  </div>
+</section>
+
+<main class="section">
+  <div class="wrap prose">
+<h2>Акаунт</h2>
+<p>Акаунт персональний. Бронювати квитки для друзів можна в межах ліміту, але відповідальність за бронь несе власник акаунта.</p>
+
+<h2>Бронювання</h2>
+<ul>
+  <li>Бронь дійсна до початку події; після початку місце може бути передане іншим відвідувачам.</li>
+  <li>Код квитка одноразовий. Повторний вхід за тим самим кодом неможливий.</li>
+  <li>Масове бронювання з подальшим перепродажем заборонене — такі акаунти блокуються.</li>
+</ul>
+
+<h2>Оплата</h2>
+<p>Платні події оплачуються на вході готівкою або карткою. Ціна на картці події остаточна, додаткових зборів немає.</p>
+
+<h2>Скасування з боку організатора</h2>
+<p>Якщо подію скасовано або перенесено, власники броні отримують повідомлення на пошту, вказану під час бронювання. Оскільки оплата відбувається на вході, фінансових зобов’язань не виникає.</p>
+
+<h2>Поведінка на події</h2>
+<p>Діють правила внутрішнього розпорядку університету. Організатор може відмовити у вході за наявності коду квитка, якщо відвідувач порушує ці правила.</p>
+    <p style="margin-top:2.5rem"><a class="btn" href="../index.html">← На головну</a></p>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer__bar" style="border:0">
+    <span>© 2026 Eventu · Студентський офіс подій</span>
+    <span><a href="../legal/privacy.html">Обробка даних</a> · <a href="../legal/terms.html">Умови</a> · <a href="../legal/cookies.html">Cookies</a></span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var K = 'eventu.v2.theme';
+  function get() { try { return JSON.parse(localStorage.getItem(K)); } catch (e) { return null; } }
+  var sys = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  var mode = get() || sys;
+  document.documentElement.setAttribute('data-theme', mode);
+  document.getElementById('theme-toggle').addEventListener('click', function () {
+    mode = mode === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', mode);
+    try { localStorage.setItem(K, JSON.stringify(mode)); } catch (e) {}
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="uk" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Адмінпанель — Eventu</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap site-header__inner">
+    <a class="brand" href="index.html">
+      <span class="brand__mark">Ev</span>
+      <span><span class="brand__name">Eventu</span><br><span class="brand__sub">адмінпанель</span></span>
+    </a>
+    <div class="row">
+      <span id="admin-who" class="ticket__seats"></span>
+      <a class="btn" href="index.html">На сайт</a>
+      <button class="icon-btn" id="theme-toggle" aria-label="Тема">◐</button>
+      <button class="btn hide" id="admin-logout">Вийти</button>
+    </div>
+  </div>
+</header>
+
+<!-- gate -->
+<section class="section" id="gate">
+  <div class="wrap" style="max-width:460px">
+    <div class="panel">
+      <h2>Вхід для персоналу</h2>
+      <p style="color:var(--ink-soft);margin:.6rem 0 1.2rem">
+        Доступ мають акаунти зі списку <code>admin.emails</code> у <code>config.js</code>.
+      </p>
+      <form id="gate-form">
+        <div class="field">
+          <label for="gate-email">Пошта</label>
+          <input id="gate-email" type="email" required autocomplete="email" value="admin@eventu.university">
+        </div>
+        <div class="field">
+          <label for="gate-pass">Пароль</label>
+          <input id="gate-pass" type="password" required autocomplete="current-password" value="eventu2026">
+        </div>
+        <button class="btn btn--solid btn--block" type="submit">Увійти</button>
+      </form>
+      <p class="notice notice--bad" id="gate-error" hidden style="margin-top:1rem"></p>
+    </div>
+  </div>
+</section>
+
+<!-- panel -->
+<main id="panel" hidden>
+  <section class="page-hero">
+    <div class="wrap">
+      <h1>Адмінпанель</h1>
+      <p>Події, броні та відгуки в реальному часі. Зміни одразу видно на головній сторінці.</p>
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="wrap counters" id="kpi"></div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="wrap">
+      <div class="tabs" id="admin-tabs">
+        <button class="chip" data-tab="events" aria-pressed="true">Події</button>
+        <button class="chip" data-tab="bookings" aria-pressed="false">Броні</button>
+        <button class="chip" data-tab="reviews" aria-pressed="false">Відгуки</button>
+        <button class="chip" data-tab="system" aria-pressed="false">Система</button>
+      </div>
+
+      <!-- events -->
+      <div data-panel="events">
+        <div class="spread" style="margin-bottom:1.2rem">
+          <h2>Події</h2>
+          <div class="row">
+            <label class="search">
+              <input id="ev-search" type="search" placeholder="Пошук події">
+            </label>
+            <button class="btn btn--solid" id="ev-new">+ Нова подія</button>
+          </div>
+        </div>
+        <div class="table-wrap"><table class="table" id="ev-table"></table></div>
+      </div>
+
+      <!-- bookings -->
+      <div data-panel="bookings" hidden>
+        <div class="spread" style="margin-bottom:1.2rem">
+          <h2>Броні</h2>
+          <div class="row">
+            <label class="search">
+              <input id="bk-search" type="search" placeholder="Код, ім’я або пошта">
+            </label>
+            <button class="btn" id="bk-export">Експорт CSV</button>
+          </div>
+        </div>
+        <div class="table-wrap"><table class="table" id="bk-table"></table></div>
+      </div>
+
+      <!-- reviews -->
+      <div data-panel="reviews" hidden>
+        <h2 style="margin-bottom:1.2rem">Відгуки</h2>
+        <div id="rv-list"></div>
+      </div>
+
+      <!-- system -->
+      <div data-panel="system" hidden>
+        <h2 style="margin-bottom:1.2rem">Система</h2>
+        <div class="panel" style="margin-bottom:1.2rem">
+          <h3>Акаунти</h3>
+          <div class="table-wrap" style="margin-top:.8rem"><table class="table" id="us-table"></table></div>
+        </div>
+        <div class="panel">
+          <h3>Дані</h3>
+          <p style="color:var(--ink-soft);margin:.6rem 0 1rem">
+            Каталог подій зберігається в цьому браузері. Скидання поверне початковий набір подій
+            з <code>data.js</code>; броні при цьому залишаться.
+          </p>
+          <div class="row">
+            <button class="btn" id="sys-export">Експорт усіх даних (JSON)</button>
+            <button class="btn btn--coral" id="sys-reset">Скинути каталог подій</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- event editor -->
+<div class="modal" id="modal-event" hidden role="dialog" aria-modal="true">
+  <div class="modal__veil"></div>
+  <div class="modal__box modal__box--wide">
+    <button class="modal__close" data-close aria-label="Закрити">✕</button>
+    <h2 id="ev-form-title">Нова подія</h2>
+    <form id="ev-form" style="margin-top:1.2rem">
+      <input type="hidden" id="f-id">
+      <div class="grid-2">
+        <div class="field"><label for="f-title-ua">Назва (UA)</label><input id="f-title-ua" required></div>
+        <div class="field"><label for="f-title-en">Назва (EN)</label><input id="f-title-en" required></div>
+        <div class="field"><label for="f-host-ua">Організатор (UA)</label><input id="f-host-ua" required></div>
+        <div class="field"><label for="f-host-en">Організатор (EN)</label><input id="f-host-en" required></div>
+      </div>
+      <div class="field"><label for="f-desc-ua">Опис (UA)</label><textarea id="f-desc-ua" rows="3" required></textarea></div>
+      <div class="field"><label for="f-desc-en">Опис (EN)</label><textarea id="f-desc-en" rows="3" required></textarea></div>
+      <div class="grid-2">
+        <div class="field"><label for="f-cat">Категорія</label><select id="f-cat"></select></div>
+        <div class="field"><label for="f-venue">Локація</label><select id="f-venue"></select></div>
+        <div class="field"><label for="f-date">Дата й час</label><input id="f-date" type="datetime-local" required></div>
+        <div class="field"><label for="f-duration">Тривалість, хв</label><input id="f-duration" type="number" min="15" step="5" required></div>
+        <div class="field"><label for="f-price">Ціна, ₴ (0 — безкоштовно)</label><input id="f-price" type="number" min="0" step="10" required></div>
+        <div class="field"><label for="f-seats">Місць усього</label><input id="f-seats" type="number" min="1" required></div>
+        <div class="field"><label for="f-taken">Зайнято поза сайтом</label><input id="f-taken" type="number" min="0" required><small>Квитки, продані офлайн</small></div>
+        <div class="field"><label for="f-ink">Колір постера</label><input id="f-ink" type="color"></div>
+        <div class="field"><label for="f-paper">Фон постера</label><input id="f-paper" type="color"></div>
+      </div>
+      <div class="row" style="margin-top:1rem">
+        <button class="btn btn--solid" type="submit">Зберегти</button>
+        <button class="btn btn--ghost" type="button" data-close>Скасувати</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="toast" id="toast" hidden role="status"></div>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/i18n.js"></script>
+<script src="assets/js/store.js"></script>
+<script src="assets/js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="uk" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cookies та локальне сховище — Eventu</title>
+<meta name="description" content="Що саме сайт зберігає у вашому браузері.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap site-header__inner">
+    <a class="brand" href="../index.html">
+      <span class="brand__mark">Ev</span>
+      <span><span class="brand__name">Eventu</span><br><span class="brand__sub">campus tickets</span></span>
+    </a>
+    <nav class="nav">
+      <a href="../index.html#events">Афіша</a>
+      <a href="../pages/how-it-works.html">Як це працює</a>
+      <a href="../pages/faq.html">Питання</a>
+      <a href="../legal/privacy.html">Документи</a>
+    </nav>
+    <button class="icon-btn" id="theme-toggle" aria-label="Тема">◐</button>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="wrap">
+    <h1>Cookies та локальне сховище</h1>
+    <p>Що саме сайт зберігає у вашому браузері.</p>
+  </div>
+</section>
+
+<main class="section">
+  <div class="wrap prose">
+<p>Eventu не використовує рекламні та аналітичні cookies. Усе, що зберігається, потрібне для роботи самого сайту й лишається у вашому браузері.</p>
+
+<h2>Що зберігається</h2>
+<ul>
+  <li><code>eventu.v2.lang</code> — обрана мова інтерфейсу;</li>
+  <li><code>eventu.v2.theme</code> — світла або темна тема;</li>
+  <li><code>eventu.v2.cookies</code> — ваша відповідь на це повідомлення;</li>
+  <li><code>eventu.v2.users</code>, <code>eventu.v2.session</code> — акаунт і поточний вхід;</li>
+  <li><code>eventu.v2.bookings</code>, <code>eventu.v2.reviews</code> — ваші броні та відгуки.</li>
+</ul>
+
+<h2>Як видалити</h2>
+<p>Налаштування браузера → дані сайтів → видалити дані для цього домену. Після цього броні та акаунт зникнуть без можливості відновлення.</p>
+
+<h2>Якщо натиснути «Тільки необхідні»</h2>
+<p>Зберігатимуться лише мова, тема й сама ця відповідь. Бронювати квитки без збереження даних неможливо, бо код квитка нікуди буде записати.</p>
+    <p style="margin-top:2.5rem"><a class="btn" href="../index.html">← На головну</a></p>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer__bar" style="border:0">
+    <span>© 2026 Eventu · Студентський офіс подій</span>
+    <span><a href="../legal/privacy.html">Обробка даних</a> · <a href="../legal/terms.html">Умови</a> · <a href="../legal/cookies.html">Cookies</a></span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var K = 'eventu.v2.theme';
+  function get() { try { return JSON.parse(localStorage.getItem(K)); } catch (e) { return null; } }
+  var sys = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  var mode = get() || sys;
+  document.documentElement.setAttribute('data-theme', mode);
+  document.getElementById('theme-toggle').addEventListener('click', function () {
+    mode = mode === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', mode);
+    try { localStorage.setItem(K, JSON.stringify(mode)); } catch (e) {}
+  });
+})();
+</script>
+</body>
+</html>

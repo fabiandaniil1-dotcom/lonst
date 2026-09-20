@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="uk" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Як це працює — Eventu</title>
+<meta name="description" content="Чотири кроки від афіші до входу в залу.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap site-header__inner">
+    <a class="brand" href="../index.html">
+      <span class="brand__mark">Ev</span>
+      <span><span class="brand__name">Eventu</span><br><span class="brand__sub">campus tickets</span></span>
+    </a>
+    <nav class="nav">
+      <a href="../index.html#events">Афіша</a>
+      <a href="../pages/how-it-works.html">Як це працює</a>
+      <a href="../pages/faq.html">Питання</a>
+      <a href="../legal/privacy.html">Документи</a>
+    </nav>
+    <button class="icon-btn" id="theme-toggle" aria-label="Тема">◐</button>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="wrap">
+    <h1>Як це працює</h1>
+    <p>Чотири кроки від афіші до входу в залу.</p>
+  </div>
+</section>
+
+<main class="section">
+  <div class="wrap prose">
+<ol class="steps">
+  <li><strong>Створіть акаунт.</strong> Потрібні ім’я, університетська пошта й пароль. Один акаунт — один студент.</li>
+  <li><strong>Оберіть подію.</strong> Фільтри за категоріями та пошук за назвою або локацією. Смужка під карткою показує, скільки місць уже зайнято.</li>
+  <li><strong>Заброньте місце.</strong> До двох квитків на подію на акаунт. Після підтвердження з’являється код квитка — він зберігається в розділі «Мої квитки».</li>
+  <li><strong>Прийдіть із кодом.</strong> На вході покажіть код і студентський квиток. Платні події оплачуються на місці.</li>
+</ol>
+
+<h2>Якщо плани змінились</h2>
+<p>Скасуйте бронь у розділі «Мої квитки». Місце повертається в продаж миттєво, тож зробіть це якомога раніше — на популярні події черга рухається швидко.</p>
+
+<h2>Якщо місць уже немає</h2>
+<p>Картка позначається як «Місць немає», кнопка бронювання вимикається. Слідкуйте за подією: коли хтось скасовує бронь, місце знову стає доступним.</p>
+    <p style="margin-top:2.5rem"><a class="btn" href="../index.html">← На головну</a></p>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer__bar" style="border:0">
+    <span>© 2026 Eventu · Студентський офіс подій</span>
+    <span><a href="../legal/privacy.html">Обробка даних</a> · <a href="../legal/terms.html">Умови</a> · <a href="../legal/cookies.html">Cookies</a></span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var K = 'eventu.v2.theme';
+  function get() { try { return JSON.parse(localStorage.getItem(K)); } catch (e) { return null; } }
+  var sys = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  var mode = get() || sys;
+  document.documentElement.setAttribute('data-theme', mode);
+  document.getElementById('theme-toggle').addEventListener('click', function () {
+    mode = mode === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', mode);
+    try { localStorage.setItem(K, JSON.stringify(mode)); } catch (e) {}
+  });
+})();
+</script>
+</body>
+</html>
